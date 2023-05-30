@@ -1,50 +1,41 @@
 package com.wsm9175.android.movieapp.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
-import com.wsm9175.android.movieapp.ui.theme.color.Purple200
-import com.wsm9175.android.movieapp.ui.theme.color.Purple500
-import com.wsm9175.android.movieapp.ui.theme.color.Purple700
-import com.wsm9175.android.movieapp.ui.theme.color.Teal200
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.ReadOnlyComposable
+import androidx.compose.runtime.staticCompositionLocalOf
+import com.wsm9175.android.movieapp.ui.theme.color.*
 
-private val DarkColorPalette = darkColors(
-    primary = Purple200,
-    primaryVariant = Purple700,
-    secondary = Teal200
-)
 
-private val LightColorPalette = lightColors(
-    primary = Purple500,
-    primaryVariant = Purple700,
-    secondary = Teal200
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
-    onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
-)
+private val LocalColors = staticCompositionLocalOf { ColorSet.Red.LightColors }
 
 @Composable
 fun MovieAppTheme(
+    myColors: ColorSet = ColorSet.Red,
+    typography: Typography = Typography,
+    shapes: Shapes = Shapes,
     darkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        myColors.DarkColors
     } else {
-        LightColorPalette
+        myColors.LightColors
     }
 
-    MaterialTheme(
-        colors = colors,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
+    CompositionLocalProvider(LocalColors provides colors) {
+        MaterialTheme(
+            colors = colors.material,
+            typography = typography,
+            shapes = shapes,
+            content = content
+        )
+    }
 }
+
+// Composition Local에 저장된 값을 가져온다.
+val MaterialTheme.colorScheme : MyColors
+    @Composable
+    @ReadOnlyComposable
+    get() = LocalColors.current
