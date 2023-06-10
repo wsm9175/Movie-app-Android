@@ -1,7 +1,6 @@
-package com.wsm9175.android.movieapp.ui.theme.buttons
+package com.wsm9175.android.movieapp.ui.components.buttons
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -15,13 +14,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.wsm9175.android.movieapp.ui.theme.MovieAppTheme
-import com.wsm9175.android.movieapp.ui.theme.Paddings
-import com.wsm9175.android.movieapp.ui.theme.colorScheme
+import com.wsm9175.android.movieapp.ui.theme.*
 
 @Composable
-fun SecondaryBorderlessButton(
+fun UnderlinedTextButton(
     modifier: Modifier = Modifier,
     @StringRes id: Int? = null, // 문자열 resource를 참조하는 변수인지 확인하는 annotation
     text: String = "",
@@ -44,7 +40,7 @@ fun SecondaryBorderlessButton(
         ) {
             Text(
                 text = id?.let { stringResource(id = id) } ?: text,
-                style = MaterialTheme.typography.button,
+                style = MaterialTheme.typography.underlinedDialogButton,
                 modifier = Modifier.padding(Paddings.small)
             )
         }
@@ -53,10 +49,10 @@ fun SecondaryBorderlessButton(
 
 @Preview
 @Composable
-fun SecondaryBorderlessButtonPreview(){
+fun UnderlinedTextButtonPreview(){
     MovieAppTheme {
-        SecondaryBorderlessButton(
-            text = "CANCEL"
-        ) {}
+        UnderlinedTextButton (
+            text = "SUBMIT"
+        ){}
     }
 }
